@@ -1,0 +1,26 @@
+name: Kojokols Worker
+
+on:
+schedule:
+- cron: "0 * * * *"
+
+jobs:
+worker:
+runs-on: ubuntu-latest
+
+steps:
+- uses: actions/checkout@v3
+
+- name: Setup Node
+uses: actions/setup-node@v3
+with:
+node-version: 18
+
+- name: Install packages
+run: npm install
+
+- name: Run worker
+run: node worker.js
+env:
+SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
